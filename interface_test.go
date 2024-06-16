@@ -24,7 +24,7 @@ func TestContract(t *testing.T) {
 		{
 			name: "Clone",
 			f: func(t *testing.T, n *vdf.Node) {
-				n.Clone(false)
+				n.Clone()
 			},
 		},
 		{

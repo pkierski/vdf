@@ -1,6 +1,6 @@
 package vdf
 
-func (n *Node) Clone(withNext bool) *Node {
+func (n *Node) Clone() *Node {
 	return n.cloneInternal(false)
 }
 
@@ -16,7 +16,7 @@ func (n *Node) cloneInternal(withNext bool) *Node {
 	}
 
 	if withNext {
-		c.next = n.cloneInternal(true)
+		c.next = n.next.cloneInternal(true)
 	}
 
 	if n.child == nil {
@@ -34,5 +34,4 @@ func (n *Node) cloneInternal(withNext bool) *Node {
 	}
 
 	return c
-
 }

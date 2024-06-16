@@ -1,9 +1,9 @@
 package vdf_test
 
 import (
-	"github/pkierski/vdf"
 	"testing"
 
+	"github.com/pkierski/vdf"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
