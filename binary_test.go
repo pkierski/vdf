@@ -1,33 +1,24 @@
 package vdf_test
 
 import (
-	"bytes"
-	"io/ioutil"
+	"os"
 	"testing"
 
-	"github.com/BenLubar/vdf"
+	"github.com/pkierski/vdf"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestBinaryReEncode(t *testing.T) {
-	in, err := ioutil.ReadFile("testdata/UserGameStatsSchema_630.bin")
-	if err != nil {
-		t.Fatal(err)
-	}
+	in, err := os.ReadFile("testdata/UserGameStatsSchema_630.bin")
+	require.NoError(t, err)
 
 	var n vdf.Node
 	err = n.UnmarshalBinary(in)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	out, err := n.MarshalBinary()
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if !bytes.Equal(in, out) {
-		t.Error("Byte slices differ!")
-		t.Logf("in:  % x", in)
-		t.Logf("out: % x", out)
-	}
+	assert.Equal(t, in, out)
 }

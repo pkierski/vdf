@@ -8,7 +8,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/BenLubar/vdf"
+	"github.com/pkierski/vdf"
 )
 
 var _ encoding.TextMarshaler = (*vdf.Node)(nil)

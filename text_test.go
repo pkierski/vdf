@@ -1,12 +1,13 @@
 package vdf_test
 
 import (
-	"bytes"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"testing"
 
-	"github.com/BenLubar/vdf"
+	"github.com/pkierski/vdf"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestText(t *testing.T) {
@@ -21,40 +22,25 @@ func TestText(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			in, err := ioutil.ReadFile(filepath.Join("testdata", "in_"+name+".txt"))
-			if err != nil {
-				t.Fatal("couldn't read input: ", err)
-			}
-			out, err := ioutil.ReadFile(filepath.Join("testdata", "out_"+name+".txt"))
-			if err != nil {
-				t.Fatal("couldn't read expected output: ", err)
-			}
+			in, err := os.ReadFile(filepath.Join("testdata", "in_"+name+".txt"))
+			require.NoError(t, err)
+			out, err := os.ReadFile(filepath.Join("testdata", "out_"+name+".txt"))
+			require.NoError(t, err)
 
 			var n vdf.Node
 			err = n.UnmarshalText(in)
-			if err != nil {
-				t.Fatal("couldn't parse: ", err)
-			}
+			require.NoError(t, err)
 
 			out1, err := n.MarshalText()
-			if err != nil {
-				t.Error("couldn't serialize: ", err)
-			} else if !bytes.Equal(in, out1) {
-				t.Error("serialized version differs!")
-				t.Logf("in:  %q", in)
-				t.Logf("out: %q", out1)
-			}
+			require.NoError(t, err)
+
+			assert.Equal(t, in, out1)
 
 			n.ClearFormatting()
 
 			out2, err := n.MarshalText()
-			if err != nil {
-				t.Error("couldn't clean and serialize: ", err)
-			} else if !bytes.Equal(out, out2) {
-				t.Error("cleaned and serialized version differs!")
-				t.Logf("in:  %q", out)
-				t.Logf("out: %q", out2)
-			}
+			require.NoError(t, err)
+			assert.Equal(t, out, out2)
 		})
 	}
 }
