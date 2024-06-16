@@ -22,6 +22,12 @@ func TestContract(t *testing.T) {
 		f    func(t *testing.T, n *vdf.Node)
 	}{
 		{
+			name: "Clone",
+			f: func(t *testing.T, n *vdf.Node) {
+				n.Clone(false)
+			},
+		},
+		{
 			name: "Color",
 			f: func(t *testing.T, n *vdf.Node) {
 				n.Color()
@@ -31,6 +37,12 @@ func TestContract(t *testing.T) {
 			name: "Condition",
 			f: func(t *testing.T, n *vdf.Node) {
 				n.Condition()
+			},
+		},
+		{
+			name: "Equal",
+			f: func(t *testing.T, n *vdf.Node) {
+				n.Equal(n)
 			},
 		},
 		{
